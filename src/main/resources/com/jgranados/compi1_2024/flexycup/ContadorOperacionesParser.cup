@@ -1,0 +1,66 @@
+package com.jgranados.compi1_2024.flexycup;
+
+import java_cup.runtime.*;
+
+
+parser code {:
+    // Connect this parser to a scanner!
+    public ContadorOperacionesParser(ContadorOperacionesLexer lex) {
+	    super(lex);
+	  }
+:}
+
+/* Terminals (tokens returned by the scanner). */
+terminal            P_COMA, SUMA, RESTA, DIVISION, MULTIPLICACION;
+terminal Integer    ENTERO;
+
+/* Non-terminals */
+non terminal        operaciones, operacion, simbolo;
+
+
+/* The grammar */
+
+/*
+operaciones -> operacion ; operaciones
+            | operacion
+
+operacion -> ENTERO simbolo ENTERO
+
+simbolo -> SUMA
+        | RESTA
+        | DIVISION
+        | MULTIPLICACION
+
+*/
+
+start with operaciones;
+
+operaciones ::= operacion P_COMA operaciones
+                | operacion
+                ;
+
+operacion   ::= ENTERO simbolo ENTERO
+                ;
+
+simbolo     ::= SUMA
+                | RESTA
+                | DIVISION
+                | MULTIPLICACION
+                ;
+
+/*
+expr_sumas ::= expr_sumas expr_suma 
+	      | expr_suma
+              | error:e
+		{: parser.report_error("Error sintactico, saltando el error: ",e); :}
+	      ;
+
+expr_suma ::= termino:e1 MAS termino:e2    
+	      {: RESULT = new Integer(e1.intValue() + e2.intValue()); System.out.printf(" suma = %d\n", RESULT); :} 
+              COMA              
+	      ;
+
+termino      ::= ENTERO:e                 
+	      {: RESULT = e; :} 
+	      ;
+*/
