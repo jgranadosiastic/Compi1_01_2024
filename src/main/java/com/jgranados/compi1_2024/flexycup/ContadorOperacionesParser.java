@@ -31,9 +31,9 @@ public class ContadorOperacionesParser extends java_cup.runtime.lr_parser {
   /** Production table. */
   protected static final short _production_table[][] = 
     unpackFromStrings(new String[] {
-    "\000\010\000\002\002\004\000\002\002\005\000\002\002" +
-    "\003\000\002\003\005\000\002\004\003\000\002\004\003" +
-    "\000\002\004\003\000\002\004\003" });
+    "\000\011\000\002\002\004\000\002\004\005\000\002\004" +
+    "\003\000\002\002\005\000\002\002\003\000\002\003\003" +
+    "\000\002\003\003\000\002\003\003\000\002\003\003" });
 
   /** Access to production table. */
   public short[][] production_table() {return _production_table;}
@@ -41,13 +41,14 @@ public class ContadorOperacionesParser extends java_cup.runtime.lr_parser {
   /** Parse-action table. */
   protected static final short[][] _action_table = 
     unpackFromStrings(new String[] {
-    "\000\015\000\004\011\006\001\002\000\004\002\017\001" +
-    "\002\000\006\002\uffff\004\015\001\002\000\012\005\011" +
-    "\006\010\007\012\010\007\001\002\000\004\011\ufffa\001" +
-    "\002\000\004\011\ufffc\001\002\000\004\011\ufffd\001\002" +
-    "\000\004\011\ufffb\001\002\000\004\011\014\001\002\000" +
-    "\006\002\ufffe\004\ufffe\001\002\000\004\011\006\001\002" +
-    "\000\004\002\000\001\002\000\004\002\001\001\002" });
+    "\000\016\000\006\003\004\011\007\001\002\000\006\002" +
+    "\ufffd\004\ufffd\001\002\000\004\002\020\001\002\000\006" +
+    "\002\uffff\004\016\001\002\000\012\005\012\006\010\007" +
+    "\013\010\011\001\002\000\004\011\ufffb\001\002\000\004" +
+    "\011\ufff9\001\002\000\004\011\ufffc\001\002\000\004\011" +
+    "\ufffa\001\002\000\004\011\015\001\002\000\006\002\ufffe" +
+    "\004\ufffe\001\002\000\006\003\004\011\007\001\002\000" +
+    "\004\002\000\001\002\000\004\002\001\001\002" });
 
   /** Access to parse-action table. */
   public short[][] action_table() {return _action_table;}
@@ -55,11 +56,12 @@ public class ContadorOperacionesParser extends java_cup.runtime.lr_parser {
   /** <code>reduce_goto</code> table. */
   protected static final short[][] _reduce_table = 
     unpackFromStrings(new String[] {
-    "\000\015\000\006\002\003\003\004\001\001\000\002\001" +
-    "\001\000\002\001\001\000\004\004\012\001\001\000\002" +
+    "\000\016\000\006\002\005\004\004\001\001\000\002\001" +
+    "\001\000\002\001\001\000\002\001\001\000\004\003\013" +
     "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
-    "\001\000\002\001\001\000\002\001\001\000\006\002\015" +
-    "\003\004\001\001\000\002\001\001\000\002\001\001" });
+    "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
+    "\000\006\002\005\004\016\001\001\000\002\001\001\000" +
+    "\002\001\001" });
 
   /** Access to <code>reduce_goto</code> table. */
   public short[][] reduce_table() {return _reduce_table;}
@@ -103,8 +105,16 @@ public class ContadorOperacionesParser extends java_cup.runtime.lr_parser {
 	    super(lex);
 	  }
 
+private ContadorOperaciones contador = new ContadorOperaciones();
+
+public ContadorOperaciones getContador() {
+    return contador;
+}
+
 public void syntax_error(Symbol cur_token) {
             System.out.println("Simbolo con error:" + symbl_name_from_id(cur_token.sym));
+            System.out.println("Linea " + cur_token.left);
+            System.out.println("Columna " + cur_token.right);
             if (expected_token_ids().isEmpty()) {
                 System.out.println("ya no se esperaba ningun simbolo");
             }
@@ -145,7 +155,7 @@ class CUP$ContadorOperacionesParser$actions {
               Object RESULT =null;
 		int start_valleft = ((java_cup.runtime.Symbol)CUP$ContadorOperacionesParser$stack.elementAt(CUP$ContadorOperacionesParser$top-1)).left;
 		int start_valright = ((java_cup.runtime.Symbol)CUP$ContadorOperacionesParser$stack.elementAt(CUP$ContadorOperacionesParser$top-1)).right;
-		Object start_val = (Object)((java_cup.runtime.Symbol) CUP$ContadorOperacionesParser$stack.elementAt(CUP$ContadorOperacionesParser$top-1)).value;
+		ContadorOperaciones start_val = (ContadorOperaciones)((java_cup.runtime.Symbol) CUP$ContadorOperacionesParser$stack.elementAt(CUP$ContadorOperacionesParser$top-1)).value;
 		RESULT = start_val;
               CUP$ContadorOperacionesParser$result = parser.getSymbolFactory().newSymbol("$START",0, ((java_cup.runtime.Symbol)CUP$ContadorOperacionesParser$stack.elementAt(CUP$ContadorOperacionesParser$top-1)), ((java_cup.runtime.Symbol)CUP$ContadorOperacionesParser$stack.peek()), RESULT);
             }
@@ -156,18 +166,18 @@ class CUP$ContadorOperacionesParser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 1: // operaciones ::= operacion P_COMA operaciones 
             {
-              Object RESULT =null;
-
-              CUP$ContadorOperacionesParser$result = parser.getSymbolFactory().newSymbol("operaciones",0, ((java_cup.runtime.Symbol)CUP$ContadorOperacionesParser$stack.elementAt(CUP$ContadorOperacionesParser$top-2)), ((java_cup.runtime.Symbol)CUP$ContadorOperacionesParser$stack.peek()), RESULT);
+              ContadorOperaciones RESULT =null;
+		 RESULT = contador; 
+              CUP$ContadorOperacionesParser$result = parser.getSymbolFactory().newSymbol("operaciones",2, ((java_cup.runtime.Symbol)CUP$ContadorOperacionesParser$stack.elementAt(CUP$ContadorOperacionesParser$top-2)), ((java_cup.runtime.Symbol)CUP$ContadorOperacionesParser$stack.peek()), RESULT);
             }
           return CUP$ContadorOperacionesParser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 2: // operaciones ::= operacion 
             {
-              Object RESULT =null;
-
-              CUP$ContadorOperacionesParser$result = parser.getSymbolFactory().newSymbol("operaciones",0, ((java_cup.runtime.Symbol)CUP$ContadorOperacionesParser$stack.peek()), ((java_cup.runtime.Symbol)CUP$ContadorOperacionesParser$stack.peek()), RESULT);
+              ContadorOperaciones RESULT =null;
+		 RESULT = contador; 
+              CUP$ContadorOperacionesParser$result = parser.getSymbolFactory().newSymbol("operaciones",2, ((java_cup.runtime.Symbol)CUP$ContadorOperacionesParser$stack.peek()), ((java_cup.runtime.Symbol)CUP$ContadorOperacionesParser$stack.peek()), RESULT);
             }
           return CUP$ContadorOperacionesParser$result;
 
@@ -175,56 +185,94 @@ class CUP$ContadorOperacionesParser$actions {
           case 3: // operacion ::= ENTERO simbolo ENTERO 
             {
               Object RESULT =null;
-
-              CUP$ContadorOperacionesParser$result = parser.getSymbolFactory().newSymbol("operacion",1, ((java_cup.runtime.Symbol)CUP$ContadorOperacionesParser$stack.elementAt(CUP$ContadorOperacionesParser$top-2)), ((java_cup.runtime.Symbol)CUP$ContadorOperacionesParser$stack.peek()), RESULT);
+		int e1left = ((java_cup.runtime.Symbol)CUP$ContadorOperacionesParser$stack.elementAt(CUP$ContadorOperacionesParser$top-2)).left;
+		int e1right = ((java_cup.runtime.Symbol)CUP$ContadorOperacionesParser$stack.elementAt(CUP$ContadorOperacionesParser$top-2)).right;
+		Integer e1 = (Integer)((java_cup.runtime.Symbol) CUP$ContadorOperacionesParser$stack.elementAt(CUP$ContadorOperacionesParser$top-2)).value;
+		int simleft = ((java_cup.runtime.Symbol)CUP$ContadorOperacionesParser$stack.elementAt(CUP$ContadorOperacionesParser$top-1)).left;
+		int simright = ((java_cup.runtime.Symbol)CUP$ContadorOperacionesParser$stack.elementAt(CUP$ContadorOperacionesParser$top-1)).right;
+		String sim = (String)((java_cup.runtime.Symbol) CUP$ContadorOperacionesParser$stack.elementAt(CUP$ContadorOperacionesParser$top-1)).value;
+		int e2left = ((java_cup.runtime.Symbol)CUP$ContadorOperacionesParser$stack.peek()).left;
+		int e2right = ((java_cup.runtime.Symbol)CUP$ContadorOperacionesParser$stack.peek()).right;
+		Integer e2 = (Integer)((java_cup.runtime.Symbol) CUP$ContadorOperacionesParser$stack.peek()).value;
+		 System.out.println("resultado: " ); 
+                                                    double resultado = 0;
+                                                    switch(sim) {
+                                                        case "s":
+                                                        resultado = e1 + e2;
+                                                        break;
+                                                        case "r":
+                                                        resultado = e1 - e2;
+                                                        break;
+                                                        case "d":
+                                                        resultado = e1 / e2;
+                                                        break;
+                                                        case "m":
+                                                        resultado = e1 * e2;
+                                                        break;
+                                                    }
+                                                    System.out.println(resultado);
+                                                
+              CUP$ContadorOperacionesParser$result = parser.getSymbolFactory().newSymbol("operacion",0, ((java_cup.runtime.Symbol)CUP$ContadorOperacionesParser$stack.elementAt(CUP$ContadorOperacionesParser$top-2)), ((java_cup.runtime.Symbol)CUP$ContadorOperacionesParser$stack.peek()), RESULT);
             }
           return CUP$ContadorOperacionesParser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 4: // simbolo ::= SUMA 
+          case 4: // operacion ::= error 
             {
               Object RESULT =null;
+		int erleft = ((java_cup.runtime.Symbol)CUP$ContadorOperacionesParser$stack.peek()).left;
+		int erright = ((java_cup.runtime.Symbol)CUP$ContadorOperacionesParser$stack.peek()).right;
+		Object er = (Object)((java_cup.runtime.Symbol) CUP$ContadorOperacionesParser$stack.peek()).value;
+		 /* no es necesario el manejo ya que estamos usando el syntax_error */
+              CUP$ContadorOperacionesParser$result = parser.getSymbolFactory().newSymbol("operacion",0, ((java_cup.runtime.Symbol)CUP$ContadorOperacionesParser$stack.peek()), ((java_cup.runtime.Symbol)CUP$ContadorOperacionesParser$stack.peek()), RESULT);
+            }
+          return CUP$ContadorOperacionesParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 5: // simbolo ::= SUMA 
+            {
+              String RESULT =null;
 		int sleft = ((java_cup.runtime.Symbol)CUP$ContadorOperacionesParser$stack.peek()).left;
 		int sright = ((java_cup.runtime.Symbol)CUP$ContadorOperacionesParser$stack.peek()).right;
 		Object s = (Object)((java_cup.runtime.Symbol) CUP$ContadorOperacionesParser$stack.peek()).value;
-		 System.out.println("Se econtro una suma: linea" + sleft + " column " + sright); 
-              CUP$ContadorOperacionesParser$result = parser.getSymbolFactory().newSymbol("simbolo",2, ((java_cup.runtime.Symbol)CUP$ContadorOperacionesParser$stack.peek()), ((java_cup.runtime.Symbol)CUP$ContadorOperacionesParser$stack.peek()), RESULT);
+		 System.out.println("Se econtro una suma: linea" + sleft + " column " + sright);  contador.incrementarSumas(); RESULT = "s";
+              CUP$ContadorOperacionesParser$result = parser.getSymbolFactory().newSymbol("simbolo",1, ((java_cup.runtime.Symbol)CUP$ContadorOperacionesParser$stack.peek()), ((java_cup.runtime.Symbol)CUP$ContadorOperacionesParser$stack.peek()), RESULT);
             }
           return CUP$ContadorOperacionesParser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 5: // simbolo ::= RESTA 
+          case 6: // simbolo ::= RESTA 
             {
-              Object RESULT =null;
+              String RESULT =null;
 		int rleft = ((java_cup.runtime.Symbol)CUP$ContadorOperacionesParser$stack.peek()).left;
 		int rright = ((java_cup.runtime.Symbol)CUP$ContadorOperacionesParser$stack.peek()).right;
 		Object r = (Object)((java_cup.runtime.Symbol) CUP$ContadorOperacionesParser$stack.peek()).value;
-		 System.out.println("Se econtro una resta" + r); 
-              CUP$ContadorOperacionesParser$result = parser.getSymbolFactory().newSymbol("simbolo",2, ((java_cup.runtime.Symbol)CUP$ContadorOperacionesParser$stack.peek()), ((java_cup.runtime.Symbol)CUP$ContadorOperacionesParser$stack.peek()), RESULT);
+		 System.out.println("Se econtro una resta" + r);  contador.incrementarRestas(); RESULT = "r"; 
+              CUP$ContadorOperacionesParser$result = parser.getSymbolFactory().newSymbol("simbolo",1, ((java_cup.runtime.Symbol)CUP$ContadorOperacionesParser$stack.peek()), ((java_cup.runtime.Symbol)CUP$ContadorOperacionesParser$stack.peek()), RESULT);
             }
           return CUP$ContadorOperacionesParser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 6: // simbolo ::= DIVISION 
+          case 7: // simbolo ::= DIVISION 
             {
-              Object RESULT =null;
+              String RESULT =null;
 		int dleft = ((java_cup.runtime.Symbol)CUP$ContadorOperacionesParser$stack.peek()).left;
 		int dright = ((java_cup.runtime.Symbol)CUP$ContadorOperacionesParser$stack.peek()).right;
 		Object d = (Object)((java_cup.runtime.Symbol) CUP$ContadorOperacionesParser$stack.peek()).value;
-		 System.out.println("Se econtro una division" + d); 
-              CUP$ContadorOperacionesParser$result = parser.getSymbolFactory().newSymbol("simbolo",2, ((java_cup.runtime.Symbol)CUP$ContadorOperacionesParser$stack.peek()), ((java_cup.runtime.Symbol)CUP$ContadorOperacionesParser$stack.peek()), RESULT);
+		 System.out.println("Se econtro una division" + d);  contador.incrementarDiv(); RESULT = "d"; 
+              CUP$ContadorOperacionesParser$result = parser.getSymbolFactory().newSymbol("simbolo",1, ((java_cup.runtime.Symbol)CUP$ContadorOperacionesParser$stack.peek()), ((java_cup.runtime.Symbol)CUP$ContadorOperacionesParser$stack.peek()), RESULT);
             }
           return CUP$ContadorOperacionesParser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 7: // simbolo ::= MULTIPLICACION 
+          case 8: // simbolo ::= MULTIPLICACION 
             {
-              Object RESULT =null;
+              String RESULT =null;
 		int mleft = ((java_cup.runtime.Symbol)CUP$ContadorOperacionesParser$stack.peek()).left;
 		int mright = ((java_cup.runtime.Symbol)CUP$ContadorOperacionesParser$stack.peek()).right;
 		Object m = (Object)((java_cup.runtime.Symbol) CUP$ContadorOperacionesParser$stack.peek()).value;
-		 System.out.println("Se econtro una multiplicacion" + m); 
-              CUP$ContadorOperacionesParser$result = parser.getSymbolFactory().newSymbol("simbolo",2, ((java_cup.runtime.Symbol)CUP$ContadorOperacionesParser$stack.peek()), ((java_cup.runtime.Symbol)CUP$ContadorOperacionesParser$stack.peek()), RESULT);
+		 System.out.println("Se econtro una multiplicacion" + m);  contador.incrementarMult(); RESULT = "m"; 
+              CUP$ContadorOperacionesParser$result = parser.getSymbolFactory().newSymbol("simbolo",1, ((java_cup.runtime.Symbol)CUP$ContadorOperacionesParser$stack.peek()), ((java_cup.runtime.Symbol)CUP$ContadorOperacionesParser$stack.peek()), RESULT);
             }
           return CUP$ContadorOperacionesParser$result;
 

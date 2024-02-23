@@ -12,13 +12,15 @@ import java.io.StringReader;
  */
 public class Main {
     public static void main(String[] args) {
-        String contenido = "26*1;9*87;1/1;";
+        String contenido = "26*1;9*87;1/1;4+3;2-5";
         StringReader reader = new StringReader(contenido);
         ContadorOperacionesLexer lexer = new ContadorOperacionesLexer(reader);
         ContadorOperacionesParser parser = new ContadorOperacionesParser(lexer);
         
         try {
-            parser.parse();
+            ((ContadorOperaciones)parser.parse().value).imprimirContador();
+            
+            parser.getContador().imprimirContador();
         } catch (Exception e) {
             System.out.println("manejo de exception");
         }
